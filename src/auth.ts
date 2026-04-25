@@ -35,4 +35,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     authorized: authConfig.callbacks!.authorized,
   },
   session: { strategy: "jwt" },
+  events: {
+    async signIn({ user }) {
+      if (user.id) {
+        await prisma.loginEvent.create({ data: { userId: user.id } }).catch(() => {});
+      }
+    },
+  },
 })
