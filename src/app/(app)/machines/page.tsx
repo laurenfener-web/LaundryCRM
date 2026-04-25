@@ -48,14 +48,14 @@ export default async function MachinesPage() {
         <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
           <table className="w-full text-sm">
             <thead>
-              <tr className="bg-gray-50 border-b border-gray-200">
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Machine</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Building</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Type</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Status</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Services</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Purchase Price</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Installed</th>
+              <tr className="border-b-2" style={{ background: "#1a3a6e" }}>
+                <th className="text-left px-4 py-3 font-bold text-white uppercase tracking-wide text-xs">Machine</th>
+                <th className="text-left px-4 py-3 font-bold text-white uppercase tracking-wide text-xs">Building</th>
+                <th className="text-left px-4 py-3 font-bold text-white uppercase tracking-wide text-xs">Type</th>
+                <th className="text-left px-4 py-3 font-bold text-white uppercase tracking-wide text-xs">Status</th>
+                <th className="text-left px-4 py-3 font-bold text-white uppercase tracking-wide text-xs">Services</th>
+                <th className="text-left px-4 py-3 font-bold text-white uppercase tracking-wide text-xs">Purchase Price</th>
+                <th className="text-left px-4 py-3 font-bold text-white uppercase tracking-wide text-xs">Installed</th>
               </tr>
             </thead>
             <tbody>

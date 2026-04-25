@@ -19,8 +19,8 @@ export function TopBar() {
   const title = titles[segment] ?? "LaundryOS";
 
   return (
-    <header className="h-14 border-b border-gray-200 bg-white flex items-center px-6 shrink-0">
-      <h1 className="text-base font-semibold text-gray-900">{title}</h1>
+    <header className="h-14 flex items-center px-6 shrink-0 border-b-4" style={{ background: "#1a3a6e", borderBottomColor: "#f5c518" }}>
+      <h1 className="text-base font-black text-white uppercase tracking-widest">{title}</h1>
     </header>
   );
 }

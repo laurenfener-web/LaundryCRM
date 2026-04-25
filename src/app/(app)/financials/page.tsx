@@ -135,10 +135,10 @@ export default async function FinancialsPage() {
           ) : (
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-gray-200">
-                  <th className="text-left py-2 font-medium text-gray-600">Part</th>
-                  <th className="text-right py-2 font-medium text-gray-600">Times Used</th>
-                  <th className="text-right py-2 font-medium text-gray-600">Total Spend</th>
+                <tr className="border-b-2" style={{ background: "#1a3a6e" }}>
+                  <th className="text-left px-3 py-2 font-bold text-white uppercase tracking-wide text-xs">Part</th>
+                  <th className="text-right px-3 py-2 font-bold text-white uppercase tracking-wide text-xs">Times Used</th>
+                  <th className="text-right px-3 py-2 font-bold text-white uppercase tracking-wide text-xs">Total Spend</th>
                 </tr>
               </thead>
               <tbody>

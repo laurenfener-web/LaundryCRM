@@ -28,13 +28,13 @@ export function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="w-64 shrink-0 border-r border-gray-200 bg-white flex flex-col h-screen sticky top-0">
-      <div className="px-6 py-5 border-b border-gray-200">
+    <aside className="w-64 shrink-0 flex flex-col h-screen sticky top-0" style={{ background: "#0d1b2a" }}>
+      <div className="px-6 py-5 border-b border-white/10">
         <div className="flex items-center gap-2">
-          <WashingMachine className="h-6 w-6 text-blue-600" />
-          <span className="font-bold text-lg text-gray-900">LaundryOS</span>
+          <WashingMachine className="h-6 w-6" style={{ color: "#f5c518" }} />
+          <span className="font-black text-lg tracking-tight text-white uppercase">LaundryOS</span>
         </div>
-        <p className="text-xs text-gray-500 mt-0.5">Machinery CRM</p>
+        <p className="text-xs mt-0.5 font-medium uppercase tracking-widest" style={{ color: "#f5c518" }}>Machinery CRM</p>
       </div>
 
       <nav className="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto">
@@ -45,11 +45,12 @@ export function Sidebar() {
               key={href}
               href={href}
               className={cn(
-                "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors",
+                "flex items-center gap-3 px-3 py-2.5 text-sm font-semibold transition-colors uppercase tracking-wide",
                 active
-                  ? "bg-blue-50 text-blue-700"
-                  : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                  ? "text-[#0d1b2a]"
+                  : "text-white/60 hover:text-white hover:bg-white/5"
               )}
+              style={active ? { background: "#f5c518", color: "#0d1b2a" } : {}}
             >
               <Icon className="h-4 w-4 shrink-0" />
               {label}
@@ -58,15 +59,16 @@ export function Sidebar() {
         })}
       </nav>
 
-      <div className="px-3 py-4 border-t border-gray-200">
+      <div className="px-3 py-4 border-t border-white/10">
         <Link
           href="/settings"
           className={cn(
-            "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors",
+            "flex items-center gap-3 px-3 py-2.5 text-sm font-semibold transition-colors uppercase tracking-wide",
             pathname.startsWith("/settings")
-              ? "bg-blue-50 text-blue-700"
-              : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+              ? "text-[#0d1b2a]"
+              : "text-white/60 hover:text-white hover:bg-white/5"
           )}
+          style={pathname.startsWith("/settings") ? { background: "#f5c518", color: "#0d1b2a" } : {}}
         >
           <Settings className="h-4 w-4 shrink-0" />
           Settings

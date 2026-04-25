@@ -64,12 +64,12 @@ export default async function PartDetailPage({ params }: { params: Promise<{ id:
           ) : (
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-gray-200">
-                  <th className="text-left py-2 font-medium text-gray-600">Date</th>
-                  <th className="text-left py-2 font-medium text-gray-600">Machine</th>
-                  <th className="text-left py-2 font-medium text-gray-600">Building</th>
-                  <th className="text-right py-2 font-medium text-gray-600">Qty</th>
-                  <th className="text-right py-2 font-medium text-gray-600">Cost</th>
+                <tr className="border-b-2" style={{ background: "#1a3a6e" }}>
+                  <th className="text-left px-3 py-2 font-bold text-white uppercase tracking-wide text-xs">Date</th>
+                  <th className="text-left px-3 py-2 font-bold text-white uppercase tracking-wide text-xs">Machine</th>
+                  <th className="text-left px-3 py-2 font-bold text-white uppercase tracking-wide text-xs">Building</th>
+                  <th className="text-right px-3 py-2 font-bold text-white uppercase tracking-wide text-xs">Qty</th>
+                  <th className="text-right px-3 py-2 font-bold text-white uppercase tracking-wide text-xs">Cost</th>
                 </tr>
               </thead>
               <tbody>

@@ -35,13 +35,13 @@ export default async function PartsPage() {
         <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
           <table className="w-full text-sm">
             <thead>
-              <tr className="bg-gray-50 border-b border-gray-200">
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Name</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">SKU</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Category</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Unit Cost</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Supplier</th>
-                <th className="text-left px-4 py-3 font-medium text-gray-600">Times Used</th>
+              <tr className="border-b-2" style={{ background: "#1a3a6e" }}>
+                <th className="text-left px-4 py-3 font-bold text-white uppercase tracking-wide text-xs">Name</th>
+                <th className="text-left px-4 py-3 font-bold text-white uppercase tracking-wide text-xs">SKU</th>
+                <th className="text-left px-4 py-3 font-bold text-white uppercase tracking-wide text-xs">Category</th>
+                <th className="text-left px-4 py-3 font-bold text-white uppercase tracking-wide text-xs">Unit Cost</th>
+                <th className="text-left px-4 py-3 font-bold text-white uppercase tracking-wide text-xs">Supplier</th>
+                <th className="text-left px-4 py-3 font-bold text-white uppercase tracking-wide text-xs">Times Used</th>
               </tr>
             </thead>
             <tbody>

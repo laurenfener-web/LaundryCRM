@@ -30,17 +30,17 @@ export default async function DashboardPage() {
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        {kpis.map(({ label, value, icon: Icon, href }) => (
+        {kpis.map(({ label, value, icon: Icon, href }, i) => (
           <Link key={label} href={href}>
-            <Card className="hover:shadow-md transition-shadow cursor-pointer">
+            <Card className="hover:shadow-lg transition-shadow cursor-pointer" style={{ borderColor: i % 2 === 0 ? "#f5c518" : "#1a3a6e", borderWidth: 2 }}>
               <CardContent className="p-5">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm text-gray-500">{label}</p>
-                    <p className="text-3xl font-bold text-gray-900 mt-1">{value}</p>
+                    <p className="text-xs font-bold uppercase tracking-widest" style={{ color: "#5a6a7e" }}>{label}</p>
+                    <p className="text-3xl font-black mt-1" style={{ color: "#0d1b2a" }}>{value}</p>
                   </div>
-                  <div className="bg-blue-50 rounded-full p-3">
-                    <Icon className="h-5 w-5 text-blue-600" />
+                  <div className="p-3" style={{ background: i % 2 === 0 ? "#f5c518" : "#1a3a6e" }}>
+                    <Icon className="h-5 w-5" style={{ color: i % 2 === 0 ? "#0d1b2a" : "#ffffff" }} />
                   </div>
                 </div>
               </CardContent>
@@ -52,7 +52,7 @@ export default async function DashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card>
           <CardHeader>
-            <CardTitle className="text-sm font-semibold text-gray-700 flex items-center gap-2">
+            <CardTitle className="text-xs font-black uppercase tracking-widest flex items-center gap-2" style={{ color: "#1a3a6e" }}>
               <Wrench className="h-4 w-4" /> Recent Service Records
             </CardTitle>
           </CardHeader>
@@ -83,7 +83,7 @@ export default async function DashboardPage() {
 
         <Card>
           <CardHeader>
-            <CardTitle className="text-sm font-semibold text-gray-700">Monthly Service Spend</CardTitle>
+            <CardTitle className="text-xs font-black uppercase tracking-widest" style={{ color: "#1a3a6e" }}>Monthly Service Spend</CardTitle>
           </CardHeader>
           <CardContent>
             {monthlySpend.length === 0 ? (
@@ -93,9 +93,10 @@ export default async function DashboardPage() {
                 {monthlySpend.slice(-6).map(({ month, total }) => (
                   <div key={month} className="flex items-center gap-3">
                     <span className="text-xs text-gray-500 w-16">{month}</span>
-                    <div className="flex-1 bg-gray-100 rounded-full h-2">
+                    <div className="flex-1 bg-gray-200 h-3">
                       <div
-                        className="bg-blue-500 h-2 rounded-full"
+                        className="h-3"
+                        style={{ background: "#1a3a6e" }}
                         style={{
                           width: `${Math.min(100, (total / Math.max(...monthlySpend.map((m) => m.total))) * 100)}%`,
                         }}
