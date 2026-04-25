@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db/client";
+import { auth } from "@/auth";
 
 export async function GET(_: Request, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -13,6 +14,9 @@ export async function GET(_: Request, { params }: { params: Promise<{ id: string
 
 export async function PATCH(req: Request, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
+  const session = await auth();
+  const userId = session?.user?.id;
+
   const body = await req.json();
   const { lineItems, ...data } = body;
   if (data.closeDate) data.closeDate = new Date(data.closeDate);
@@ -37,6 +41,7 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
         type: "DEAL_STAGE_CHANGED",
         body: `Stage changed from ${existing.stage} to ${data.stage}`,
         dealId: id,
+        userId: userId ?? undefined,
       },
     });
   }

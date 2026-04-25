@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { signUp } from "./actions";
@@ -14,10 +15,23 @@ export default function SignUpPage() {
     e.preventDefault();
     setError("");
     setLoading(true);
-    const result = await signUp(new FormData(e.currentTarget));
-    setLoading(false);
+
+    const formData = new FormData(e.currentTarget);
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+
+    const result = await signUp(formData);
     if (result?.error) {
+      setLoading(false);
       setError(result.error);
+      return;
+    }
+
+    // Auto sign-in after successful registration
+    const res = await signIn("credentials", { email, password, redirect: false });
+    setLoading(false);
+    if (res?.ok) {
+      router.push("/dashboard");
     } else {
       router.push("/login?registered=1");
     }

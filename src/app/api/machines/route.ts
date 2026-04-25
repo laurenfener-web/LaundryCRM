@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db/client";
+import { auth } from "@/auth";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
@@ -13,6 +14,9 @@ export async function GET(req: Request) {
 }
 
 export async function POST(req: Request) {
+  const session = await auth();
+  const userId = session?.user?.id;
+
   const body = await req.json();
   const machine = await prisma.machine.create({
     data: body,
@@ -24,6 +28,7 @@ export async function POST(req: Request) {
       body: `Machine ${machine.make} ${machine.model} added`,
       machineId: machine.id,
       buildingId: machine.buildingId,
+      userId: userId ?? undefined,
     },
   });
   return NextResponse.json(machine, { status: 201 });

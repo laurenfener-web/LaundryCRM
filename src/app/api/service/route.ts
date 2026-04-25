@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db/client";
+import { auth } from "@/auth";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
@@ -17,8 +18,16 @@ export async function GET(req: Request) {
 }
 
 export async function POST(req: Request) {
+  const session = await auth();
+  const userId = session?.user?.id;
+
   const body = await req.json();
   const { parts, ...recordData } = body;
+
+  // Default technicianId to the logged-in user if not set
+  if (!recordData.technicianId && userId) {
+    recordData.technicianId = userId;
+  }
 
   const record = await prisma.serviceRecord.create({
     data: {
@@ -43,6 +52,7 @@ export async function POST(req: Request) {
       body: `${recordData.serviceType.replace(/_/g, " ")} service logged`,
       machineId: recordData.machineId,
       serviceRecordId: record.id,
+      userId: userId ?? undefined,
     },
   });
 
