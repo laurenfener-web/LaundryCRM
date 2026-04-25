@@ -11,6 +11,7 @@ import {
   TrendingUp,
   DollarSign,
   Settings,
+  Users,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -22,6 +23,7 @@ const nav = [
   { href: "/parts", label: "Parts", icon: Package },
   { href: "/deals", label: "Deals", icon: TrendingUp },
   { href: "/financials", label: "Financials", icon: DollarSign },
+  { href: "/users", label: "Users", icon: Users },
 ];
 
 export function Sidebar() {
