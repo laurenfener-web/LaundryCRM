@@ -96,8 +96,8 @@ export default async function DashboardPage() {
                     <div className="flex-1 bg-gray-200 h-3">
                       <div
                         className="h-3"
-                        style={{ background: "#1a3a6e" }}
                         style={{
+                          background: "#1a3a6e",
                           width: `${Math.min(100, (total / Math.max(...monthlySpend.map((m) => m.total))) * 100)}%`,
                         }}
                       />
