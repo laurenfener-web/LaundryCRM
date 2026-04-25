@@ -1,0 +1,159 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String?
+  email     String   @unique
+  password  String?
+  role      String   @default("TECHNICIAN")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  serviceRecords ServiceRecord[]
+  activities     Activity[]
+  assignedDeals  Deal[]
+}
+
+model Building {
+  id         String    @id @default(cuid())
+  name       String
+  address    String
+  city       String
+  state      String
+  zip        String
+  ownerName  String?
+  ownerEmail String?
+  ownerPhone String?
+  notes      String?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  deletedAt  DateTime?
+
+  machines   Machine[]
+  deals      Deal[]
+  activities Activity[]
+}
+
+model Machine {
+  id            String    @id @default(cuid())
+  buildingId    String
+  serialNumber  String?
+  make          String
+  model         String
+  type          String
+  status        String    @default("ACTIVE")
+  installDate   DateTime?
+  purchasePrice Float?
+  notes         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deletedAt     DateTime?
+
+  building       Building        @relation(fields: [buildingId], references: [id])
+  serviceRecords ServiceRecord[]
+  activities     Activity[]
+}
+
+model Part {
+  id          String   @id @default(cuid())
+  sku         String?
+  name        String
+  description String?
+  category    String?
+  unitCost    Float
+  supplier    String?
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  serviceRecordParts ServiceRecordPart[]
+}
+
+model ServiceRecord {
+  id            String    @id @default(cuid())
+  machineId     String
+  technicianId  String?
+  serviceDate   DateTime
+  serviceType   String
+  status        String    @default("COMPLETED")
+  description   String
+  laborHours    Float?
+  laborCost     Float?
+  invoiceNumber String?
+  warrantyWork  Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  machine    Machine             @relation(fields: [machineId], references: [id])
+  technician User?               @relation(fields: [technicianId], references: [id])
+  parts      ServiceRecordPart[]
+  activities Activity[]
+}
+
+model ServiceRecordPart {
+  id              String @id @default(cuid())
+  serviceRecordId String
+  partId          String
+  quantity        Int    @default(1)
+  unitCostAtTime  Float
+
+  serviceRecord ServiceRecord @relation(fields: [serviceRecordId], references: [id], onDelete: Cascade)
+  part          Part          @relation(fields: [partId], references: [id])
+}
+
+model Deal {
+  id           String    @id @default(cuid())
+  buildingId   String?
+  assignedToId String?
+  title        String
+  stage        String    @default("PROSPECTING")
+  value        Float?
+  closeDate    DateTime?
+  probability  Int?
+  notes        String?
+  lostReason   String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  deletedAt    DateTime?
+
+  building   Building?      @relation(fields: [buildingId], references: [id])
+  assignedTo User?          @relation(fields: [assignedToId], references: [id])
+  lineItems  DealLineItem[]
+  activities Activity[]
+}
+
+model DealLineItem {
+  id          String  @id @default(cuid())
+  dealId      String
+  description String
+  quantity    Int     @default(1)
+  unitPrice   Float
+  machineType String?
+
+  deal Deal @relation(fields: [dealId], references: [id], onDelete: Cascade)
+}
+
+model Activity {
+  id              String   @id @default(cuid())
+  type            String
+  body            String
+  createdAt       DateTime @default(now())
+  userId          String?
+  buildingId      String?
+  machineId       String?
+  serviceRecordId String?
+  dealId          String?
+
+  user          User?          @relation(fields: [userId], references: [id])
+  building      Building?      @relation(fields: [buildingId], references: [id])
+  machine       Machine?       @relation(fields: [machineId], references: [id])
+  serviceRecord ServiceRecord? @relation(fields: [serviceRecordId], references: [id])
+  deal          Deal?          @relation(fields: [dealId], references: [id])
+}
