@@ -12,6 +12,7 @@ import {
   DollarSign,
   Settings,
   Users,
+  Truck,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -21,6 +22,7 @@ const nav = [
   { href: "/machines", label: "Machines", icon: WashingMachine },
   { href: "/service", label: "Service Records", icon: Wrench },
   { href: "/parts", label: "Parts", icon: Package },
+  { href: "/vendors", label: "Vendors", icon: Truck },
   { href: "/deals", label: "Deals", icon: TrendingUp },
   { href: "/financials", label: "Financials", icon: DollarSign },
   { href: "/users", label: "Users", icon: Users },

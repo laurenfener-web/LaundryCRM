@@ -8,6 +8,7 @@ import type {
   DealLineItem,
   Activity,
   User,
+  Vendor,
 } from "@/generated/prisma/client";
 
 export type {
@@ -20,6 +21,7 @@ export type {
   DealLineItem,
   Activity,
   User,
+  Vendor,
 };
 
 export type MachineWithBuilding = Machine & { building: Building };
@@ -57,6 +59,22 @@ export const MACHINE_STATUSES = [
   "DECOMMISSIONED",
   "FOR_SALE",
 ] as const;
+export const FUEL_TYPES = ["ELECTRIC", "GAS", "PROPANE", "OTHER"] as const;
+export const CONTROL_TYPES = ["COIN", "CARD", "APP", "HYBRID", "MANUAL"] as const;
+export const CONDITIONS = ["NEW", "LIKE_NEW", "GOOD", "FAIR", "POOR"] as const;
+export const OWNERSHIP_TYPES = ["OWNED", "LEASED", "RENTED"] as const;
+export const VENDOR_CATEGORIES = ["MANUFACTURER", "DISTRIBUTOR", "REPAIR", "PARTS", "OTHER"] as const;
+export const VOLTAGE_OPTIONS = ["110V", "208V", "240V", "OTHER"] as const;
+export const CAPACITY_UNITS = ["lbs", "kg"] as const;
+export const SORT_OPTIONS = [
+  { value: "newest", label: "Newest first" },
+  { value: "oldest", label: "Oldest first" },
+  { value: "make", label: "Make A–Z" },
+  { value: "modelYear", label: "Model year" },
+  { value: "purchasePrice", label: "Purchase price" },
+  { value: "installDate", label: "Install date" },
+  { value: "condition", label: "Condition" },
+] as const;
 export const SERVICE_TYPES = [
   "PREVENTIVE_MAINTENANCE",
   "REPAIR",
@@ -86,3 +104,8 @@ export type MachineStatus = (typeof MACHINE_STATUSES)[number];
 export type ServiceType = (typeof SERVICE_TYPES)[number];
 export type ServiceStatus = (typeof SERVICE_STATUSES)[number];
 export type DealStage = (typeof DEAL_STAGES)[number];
+export type VendorCategory = (typeof VENDOR_CATEGORIES)[number];
+export type FuelType = (typeof FUEL_TYPES)[number];
+export type ControlType = (typeof CONTROL_TYPES)[number];
+export type Condition = (typeof CONDITIONS)[number];
+export type OwnershipType = (typeof OWNERSHIP_TYPES)[number];

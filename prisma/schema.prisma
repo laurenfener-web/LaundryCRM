@@ -68,7 +68,30 @@ model Machine {
   updatedAt     DateTime  @updatedAt
   deletedAt     DateTime?
 
+  // Classification & specs
+  modelYear      Int?
+  capacity       Float?
+  capacityUnit   String?
+  fuelType       String?
+  voltage        String?
+  controlType    String?
+  condition      String?
+  warrantyExpiry DateTime?
+  nextServiceDue DateTime?
+
+  // Financial
+  listPrice    Float?
+  currentValue Float?
+
+  // Location & ownership
+  locationDetail String?
+  ownershipType  String?
+  vendorId       String?
+  leaseEndDate   DateTime?
+  assetTag       String?
+
   building       Building        @relation(fields: [buildingId], references: [id])
+  vendor         Vendor?         @relation(fields: [vendorId], references: [id])
   serviceRecords ServiceRecord[]
   activities     Activity[]
 }
@@ -150,6 +173,26 @@ model DealLineItem {
   machineType String?
 
   deal Deal @relation(fields: [dealId], references: [id], onDelete: Cascade)
+}
+
+model Vendor {
+  id           String    @id @default(cuid())
+  name         String
+  category     String?
+  contactName  String?
+  phone        String?
+  email        String?
+  website      String?
+  address      String?
+  city         String?
+  state        String?
+  zip          String?
+  notes        String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  deletedAt    DateTime?
+
+  machines Machine[]
 }
 
 model Activity {
