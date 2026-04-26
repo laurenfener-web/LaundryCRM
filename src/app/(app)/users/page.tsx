@@ -3,6 +3,8 @@ import { auth } from "@/auth";
 import { formatDate } from "@/lib/utils";
 import { Card, CardContent } from "@/components/ui/card";
 import { Users } from "lucide-react";
+import { UserRow } from "./UserRow";
+import { InviteButton } from "./InviteButton";
 
 export default async function UsersPage() {
   const session = await auth();
@@ -25,6 +27,7 @@ export default async function UsersPage() {
           <h2 className="text-lg font-semibold text-gray-900">Users</h2>
           <p className="text-sm text-gray-500">{users.length} {users.length === 1 ? "account" : "accounts"}</p>
         </div>
+        <InviteButton />
       </div>
 
       {users.length === 0 ? (
@@ -44,44 +47,19 @@ export default async function UsersPage() {
                 <th className="text-left px-4 py-3 font-bold text-white uppercase tracking-wide text-xs">Role</th>
                 <th className="text-left px-4 py-3 font-bold text-white uppercase tracking-wide text-xs">Joined</th>
                 <th className="text-left px-4 py-3 font-bold text-white uppercase tracking-wide text-xs">Last Login</th>
-                <th className="text-right px-4 py-3 font-bold text-white uppercase tracking-wide text-xs">Total Logins</th>
+                <th className="text-right px-4 py-3 font-bold text-white uppercase tracking-wide text-xs">Logins</th>
+                <th className="text-right px-4 py-3 font-bold text-white uppercase tracking-wide text-xs">Actions</th>
               </tr>
             </thead>
             <tbody>
-              {users.map((user) => {
-                const isYou = user.email === session?.user?.email;
-                const lastLogin = user.loginEvents[0]?.createdAt;
-                return (
-                  <tr key={user.id} className="border-b border-gray-100 hover:bg-gray-50 last:border-0">
-                    <td className="px-4 py-3 font-medium text-gray-900">
-                      {user.name ?? "—"}
-                      {isYou && (
-                        <span className="ml-2 text-xs font-bold uppercase tracking-wide px-1.5 py-0.5" style={{ background: "#f5c518", color: "#0d1b2a" }}>
-                          You
-                        </span>
-                      )}
-                    </td>
-                    <td className="px-4 py-3 text-gray-600">{user.email}</td>
-                    <td className="px-4 py-3">
-                      <span
-                        className="text-xs font-bold uppercase tracking-wide px-2 py-0.5"
-                        style={
-                          user.role === "ADMIN"
-                            ? { background: "#1a3a6e", color: "#fff" }
-                            : { background: "#e5e7eb", color: "#374151" }
-                        }
-                      >
-                        {user.role}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3 text-gray-500">{formatDate(user.createdAt)}</td>
-                    <td className="px-4 py-3 text-gray-500">
-                      {lastLogin ? formatDate(lastLogin) : <span className="text-gray-300">Never</span>}
-                    </td>
-                    <td className="px-4 py-3 text-right text-gray-600">{user._count.loginEvents}</td>
-                  </tr>
-                );
-              })}
+              {users.map((user) => (
+                <UserRow
+                  key={user.id}
+                  user={user}
+                  isYou={user.email === session?.user?.email}
+                  formatDate={formatDate}
+                />
+              ))}
             </tbody>
           </table>
         </div>
