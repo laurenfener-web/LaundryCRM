@@ -1,6 +1,5 @@
 import { prisma } from "@/lib/db/client";
 import { auth } from "@/auth";
-import { formatDate } from "@/lib/utils";
 import { Card, CardContent } from "@/components/ui/card";
 import { Users } from "lucide-react";
 import { UserRow } from "./UserRow";
@@ -57,7 +56,6 @@ export default async function UsersPage() {
                   key={user.id}
                   user={user}
                   isYou={user.email === session?.user?.email}
-                  formatDate={formatDate}
                 />
               ))}
             </tbody>

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { updateRole, toggleActive, deleteUser } from "./actions";
+import { formatDate } from "@/lib/utils";
 
 interface UserRowProps {
   user: {
@@ -15,10 +16,9 @@ interface UserRowProps {
     _count: { loginEvents: number };
   };
   isYou: boolean;
-  formatDate: (d: Date | string) => string;
 }
 
-export function UserRow({ user, isYou, formatDate }: UserRowProps) {
+export function UserRow({ user, isYou }: UserRowProps) {
   const [role, setRole] = useState(user.role);
   const [active, setActive] = useState(user.active);
   const [saving, setSaving] = useState(false);
