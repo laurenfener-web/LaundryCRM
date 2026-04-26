@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
@@ -15,27 +15,67 @@ function LoginForm() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [shake, setShake] = useState(false);
+  const passwordRef = useRef<HTMLInputElement>(null);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError("");
     setLoading(true);
-    const res = await signIn("credentials", { email, password, redirect: false });
-    setLoading(false);
-    if (res?.error) {
-      setError("Invalid email or password.");
-    } else {
-      router.push("/dashboard");
+
+    try {
+      const res = await signIn("credentials", { email, password, redirect: false });
+
+      if (!res || res.error) {
+        setPassword("");
+        setError("Incorrect email or password. Please try again.");
+        setShake(true);
+        setTimeout(() => setShake(false), 600);
+        setTimeout(() => passwordRef.current?.focus(), 50);
+      } else {
+        router.push("/dashboard");
+        router.refresh();
+      }
+    } catch {
+      setPassword("");
+      setError("Something went wrong. Please try again.");
+      setShake(true);
+      setTimeout(() => setShake(false), 600);
     }
+
+    setLoading(false);
   }
 
   return (
-    <div className="border-2 p-8" style={{ borderColor: "#1a3a6e", background: "#0f2238" }}>
+    <div
+      className="border-2 p-8 transition-transform"
+      style={{
+        borderColor: error ? "#ef4444" : "#1a3a6e",
+        background: "#0f2238",
+        animation: shake ? "shake 0.5s ease-in-out" : undefined,
+      }}
+    >
+      <style>{`
+        @keyframes shake {
+          0%, 100% { transform: translateX(0); }
+          20% { transform: translateX(-8px); }
+          40% { transform: translateX(8px); }
+          60% { transform: translateX(-6px); }
+          80% { transform: translateX(6px); }
+        }
+      `}</style>
+
       <h2 className="text-lg font-black uppercase tracking-widest text-white mb-6">Sign In</h2>
 
       {justRegistered && (
         <div className="mb-4 px-3 py-2 border-2 text-xs font-bold uppercase tracking-wide" style={{ borderColor: "#f5c518", color: "#f5c518" }}>
           Account created — sign in below.
+        </div>
+      )}
+
+      {error && (
+        <div className="mb-4 px-3 py-2 border-2 text-xs font-bold uppercase tracking-wide flex items-center gap-2" style={{ borderColor: "#ef4444", color: "#ef4444", background: "rgba(239,68,68,0.08)" }}>
+          <span>✕</span> {error}
         </div>
       )}
 
@@ -47,13 +87,13 @@ function LoginForm() {
           <input
             type="email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => { setEmail(e.target.value); setError(""); }}
             required
             autoComplete="email"
             className="w-full px-3 py-2 text-sm border-2 bg-transparent text-white outline-none transition-colors"
-            style={{ borderColor: "#1a3a6e" }}
+            style={{ borderColor: error ? "#ef4444" : "#1a3a6e" }}
             onFocus={(e) => (e.target.style.borderColor = "#f5c518")}
-            onBlur={(e) => (e.target.style.borderColor = "#1a3a6e")}
+            onBlur={(e) => (e.target.style.borderColor = error ? "#ef4444" : "#1a3a6e")}
             placeholder="you@example.com"
           />
         </div>
@@ -63,24 +103,19 @@ function LoginForm() {
             Password
           </label>
           <input
+            ref={passwordRef}
             type="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => { setPassword(e.target.value); setError(""); }}
             required
             autoComplete="current-password"
             className="w-full px-3 py-2 text-sm border-2 bg-transparent text-white outline-none transition-colors"
-            style={{ borderColor: "#1a3a6e" }}
+            style={{ borderColor: error ? "#ef4444" : "#1a3a6e" }}
             onFocus={(e) => (e.target.style.borderColor = "#f5c518")}
-            onBlur={(e) => (e.target.style.borderColor = "#1a3a6e")}
+            onBlur={(e) => (e.target.style.borderColor = error ? "#ef4444" : "#1a3a6e")}
             placeholder="••••••••"
           />
         </div>
-
-        {error && (
-          <p className="text-xs font-bold uppercase tracking-wide" style={{ color: "#f87171" }}>
-            {error}
-          </p>
-        )}
 
         <button
           type="submit"
