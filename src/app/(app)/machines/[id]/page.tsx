@@ -145,7 +145,10 @@ export default async function MachineDetailPage({ params }: { params: Promise<{ 
 
         {/* Identity */}
         <Card><CardContent className="p-4 space-y-3">
-          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Identity</p>
+          <div className="flex items-center justify-between">
+            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Identity</p>
+            <Link href={`/machines/${id}/edit#identity`} className="text-gray-400 hover:text-blue-600"><Edit className="h-3.5 w-3.5" /></Link>
+          </div>
           <div className="space-y-2">
             <Row label="Type" value={machine.type} />
             <Row label="Serial #" value={machine.serialNumber} />
@@ -159,7 +162,10 @@ export default async function MachineDetailPage({ params }: { params: Promise<{ 
 
         {/* Specs */}
         <Card><CardContent className="p-4 space-y-3">
-          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Specifications</p>
+          <div className="flex items-center justify-between">
+            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Specifications</p>
+            <Link href={`/machines/${id}/edit#specifications`} className="text-gray-400 hover:text-blue-600"><Edit className="h-3.5 w-3.5" /></Link>
+          </div>
           <div className="space-y-2">
             <Row label="Fuel" value={machine.fuelType} />
             <Row label="Voltage" value={machine.voltage} />
@@ -170,7 +176,10 @@ export default async function MachineDetailPage({ params }: { params: Promise<{ 
 
         {/* Service schedule */}
         <Card><CardContent className="p-4 space-y-3">
-          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Schedule & Warranty</p>
+          <div className="flex items-center justify-between">
+            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Schedule & Warranty</p>
+            <Link href={`/machines/${id}/edit#dates`} className="text-gray-400 hover:text-blue-600"><Edit className="h-3.5 w-3.5" /></Link>
+          </div>
           <div className="space-y-2">
             <Row
               label="Next service"
@@ -209,7 +218,10 @@ export default async function MachineDetailPage({ params }: { params: Promise<{ 
 
         {/* Financial */}
         <Card><CardContent className="p-4 space-y-3">
-          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Financial</p>
+          <div className="flex items-center justify-between">
+            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Financial</p>
+            <Link href={`/machines/${id}/edit#financial`} className="text-gray-400 hover:text-blue-600"><Edit className="h-3.5 w-3.5" /></Link>
+          </div>
           <div className="space-y-2">
             <Row label="List / MSRP" value={formatCurrency(machine.listPrice)} />
             <Row label="Purchase price" value={formatCurrency(machine.purchasePrice)} />
@@ -225,7 +237,10 @@ export default async function MachineDetailPage({ params }: { params: Promise<{ 
 
         {/* Vendor */}
         <Card><CardContent className="p-4 space-y-3">
-          <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Vendor</p>
+          <div className="flex items-center justify-between">
+            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Vendor</p>
+            <Link href={`/machines/${id}/edit#ownership`} className="text-gray-400 hover:text-blue-600"><Edit className="h-3.5 w-3.5" /></Link>
+          </div>
           {machine.vendor ? (
             <div className="space-y-2">
               <Link href={`/vendors/${machine.vendor.id}`} className="text-sm font-medium text-blue-600 hover:underline block">
@@ -264,7 +279,10 @@ export default async function MachineDetailPage({ params }: { params: Promise<{ 
         {/* Notes */}
         {machine.notes && (
           <Card><CardContent className="p-4 space-y-2">
-            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Notes</p>
+            <div className="flex items-center justify-between">
+              <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Notes</p>
+              <Link href={`/machines/${id}/edit#notes`} className="text-gray-400 hover:text-blue-600"><Edit className="h-3.5 w-3.5" /></Link>
+            </div>
             <p className="text-sm text-gray-700 whitespace-pre-wrap">{machine.notes}</p>
           </CardContent></Card>
         )}

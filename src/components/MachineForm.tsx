@@ -195,7 +195,7 @@ export function MachineForm({
       {mode === "full" && (
         <>
           {/* Identity */}
-          <div className="space-y-4 pt-4 border-t">
+          <div id="identity" className="space-y-4 pt-4 border-t">
             <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Identity</p>
             <div className="grid grid-cols-3 gap-4">
               <div>
@@ -225,7 +225,7 @@ export function MachineForm({
           </div>
 
           {/* Specifications */}
-          <div className="space-y-4 pt-4 border-t">
+          <div id="specifications" className="space-y-4 pt-4 border-t">
             <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Specifications</p>
             <div className="grid grid-cols-2 gap-4">
               <div>
@@ -287,7 +287,7 @@ export function MachineForm({
           </div>
 
           {/* Financial */}
-          <div className="space-y-4 pt-4 border-t">
+          <div id="financial" className="space-y-4 pt-4 border-t">
             <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Financial</p>
             <div className="grid grid-cols-3 gap-4">
               <div>
@@ -302,7 +302,7 @@ export function MachineForm({
           </div>
 
           {/* Dates */}
-          <div className="space-y-4 pt-4 border-t">
+          <div id="dates" className="space-y-4 pt-4 border-t">
             <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Dates</p>
             <div className="grid grid-cols-2 gap-4">
               <div>
@@ -317,7 +317,7 @@ export function MachineForm({
           </div>
 
           {/* Ownership */}
-          <div className="space-y-4 pt-4 border-t">
+          <div id="ownership" className="space-y-4 pt-4 border-t">
             <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Ownership</p>
             <div className="grid grid-cols-2 gap-4">
               <div>
@@ -352,7 +352,7 @@ export function MachineForm({
       )}
 
       {/* Notes */}
-      <div className="pt-4 border-t">
+      <div id="notes" className="pt-4 border-t">
         <Label htmlFor="notes">Notes</Label>
         <Textarea id="notes" {...register("notes")} rows={3} />
       </div>
