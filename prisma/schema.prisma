@@ -84,14 +84,22 @@ model Machine {
   currentValue Float?
 
   // Location & ownership
-  locationDetail String?
-  ownershipType  String?
-  vendorId       String?
-  leaseEndDate   DateTime?
-  assetTag       String?
+  locationDetail  String?
+  ownershipType   String?
+  vendorId        String?
+  companyId       String?
+  leaseEndDate    DateTime?
+  assetTag        String?
+
+  // Purchase batch & sale
+  purchaseOrderId String?
+  salePrice       Float?
+  soldAt          DateTime?
 
   building       Building        @relation(fields: [buildingId], references: [id])
   vendor         Vendor?         @relation(fields: [vendorId], references: [id])
+  company        Company?        @relation(fields: [companyId], references: [id])
+  purchaseOrder  PurchaseOrder?  @relation(fields: [purchaseOrderId], references: [id])
   serviceRecords ServiceRecord[]
   activities     Activity[]
 }
@@ -103,6 +111,7 @@ model Part {
   description String?
   category    String?
   unitCost    Float
+  stockQty    Int      @default(0)
   supplier    String?
   notes       String?
   createdAt   DateTime @default(now())
@@ -192,6 +201,63 @@ model Vendor {
   updatedAt    DateTime  @updatedAt
   deletedAt    DateTime?
 
+  machines       Machine[]
+  purchaseOrders PurchaseOrder[]
+}
+
+model Company {
+  id        String    @id @default(cuid())
+  name      String
+  industry  String?
+  type      String?
+  website   String?
+  phone     String?
+  email     String?
+  address   String?
+  city      String?
+  state     String?
+  zip       String?
+  notes     String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  owners         Owner[]
+  machines       Machine[]
+  purchaseOrders PurchaseOrder[]
+}
+
+model Owner {
+  id        String    @id @default(cuid())
+  name      String
+  title     String?
+  email     String?
+  phone     String?
+  companyId String?
+  notes     String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  company        Company?        @relation(fields: [companyId], references: [id])
+  purchaseOrders PurchaseOrder[]
+}
+
+model PurchaseOrder {
+  id        String   @id @default(cuid())
+  vendorId  String?
+  companyId String?
+  ownerId   String?
+  orderDate DateTime
+  unitCost  Float?
+  quantity  Int?
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  vendor   Vendor?  @relation(fields: [vendorId], references: [id])
+  company  Company? @relation(fields: [companyId], references: [id])
+  owner    Owner?   @relation(fields: [ownerId], references: [id])
   machines Machine[]
 }
 

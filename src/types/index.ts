@@ -9,6 +9,9 @@ import type {
   Activity,
   User,
   Vendor,
+  Company,
+  Owner,
+  PurchaseOrder,
 } from "@/generated/prisma/client";
 
 export type {
@@ -22,6 +25,9 @@ export type {
   Activity,
   User,
   Vendor,
+  Company,
+  Owner,
+  PurchaseOrder,
 };
 
 export type MachineWithBuilding = Machine & { building: Building };
@@ -48,8 +54,23 @@ export type MachineFinancials = {
   purchasePrice: number;
   totalLaborCost: number;
   totalPartsCost: number;
+  totalServiceCost: number;
   totalCost: number;
+  salePrice: number | null;
+  profit: number | null;
   serviceCount: number;
+};
+
+export type PurchaseOrderSummary = {
+  purchaseOrderId: string;
+  machineCount: number;
+  soldCount: number;
+  totalInvested: number;
+  totalServiceCost: number;
+  totalCost: number;
+  totalRevenue: number;
+  profit: number;
+  machines: MachineFinancials[];
 };
 
 export const MACHINE_TYPES = ["WASHER", "DRYER", "COMBO", "OTHER"] as const;
@@ -98,6 +119,16 @@ export const DEAL_STAGES = [
   "CLOSED_LOST",
 ] as const;
 export const ROLES = ["ADMIN", "MANAGER", "TECHNICIAN", "SALES"] as const;
+export const COMPANY_TYPES = ["PROSPECT", "CUSTOMER", "PARTNER", "OTHER"] as const;
+export const COMPANY_INDUSTRIES = [
+  "LAUNDROMAT",
+  "APARTMENT",
+  "HOTEL",
+  "HEALTHCARE",
+  "UNIVERSITY",
+  "GOVERNMENT",
+  "OTHER",
+] as const;
 
 export type MachineType = (typeof MACHINE_TYPES)[number];
 export type MachineStatus = (typeof MACHINE_STATUSES)[number];

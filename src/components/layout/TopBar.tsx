@@ -12,6 +12,8 @@ const titles: Record<string, string> = {
   "/financials": "Financials",
   "/users": "Users",
   "/settings": "Settings",
+  "/companies": "Companies",
+  "/owners": "Owners",
 };
 
 interface TopBarProps {
