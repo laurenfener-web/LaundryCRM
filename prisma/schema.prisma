@@ -96,12 +96,32 @@ model Machine {
   salePrice       Float?
   soldAt          DateTime?
 
+  // Parts flow
+  isPartsSource Boolean @default(false)
+
   building       Building        @relation(fields: [buildingId], references: [id])
   vendor         Vendor?         @relation(fields: [vendorId], references: [id])
   company        Company?        @relation(fields: [companyId], references: [id])
   purchaseOrder  PurchaseOrder?  @relation(fields: [purchaseOrderId], references: [id])
   serviceRecords ServiceRecord[]
   activities     Activity[]
+  harvestedParts MachinePart[]
+}
+
+model MachinePart {
+  id          String    @id @default(cuid())
+  machineId   String
+  name        String
+  description String?
+  category    String?
+  condition   String?
+  quantity    Int       @default(1)
+  salePrice   Float?
+  soldAt      DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  machine Machine @relation(fields: [machineId], references: [id], onDelete: Cascade)
 }
 
 model Part {

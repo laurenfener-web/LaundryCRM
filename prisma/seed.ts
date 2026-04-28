@@ -302,8 +302,31 @@ async function main() {
       installDate: new Date("2016-01-20"),
       purchasePrice: 1400,
       currentValue: 0,
+      isPartsSource: true,
       locationDetail: "Basement",
-      notes: "Retired — pending replacement quote",
+      notes: "Acquired from laundromat — being harvested for parts. Drive motor still available.",
+    },
+  });
+
+  // Cheap laundromat machine — fully profitable from parts
+  const m8 = await prisma.machine.create({
+    data: {
+      buildingId: b1.id,
+      make: "Kenmore",
+      model: "29002",
+      type: "Washer",
+      status: "RETIRED",
+      capacity: 24,
+      capacityUnit: "lbs",
+      voltage: "120V",
+      fuelType: "Electric",
+      condition: "Fair",
+      installDate: new Date("2015-06-01"),
+      purchasePrice: 150,
+      currentValue: 0,
+      isPartsSource: true,
+      locationDetail: "Basement — decommissioned",
+      notes: "Acquired from laundromat closure for $150. Parts sales have exceeded cost.",
     },
   });
   console.log("✓ Machines");
@@ -340,6 +363,31 @@ async function main() {
     },
   });
   console.log("✓ Parts");
+
+  // --- Machine Parts (harvested from parts-source machines) ---
+  await prisma.machinePart.deleteMany({ where: { machineId: { in: [m7.id, m8.id] } } });
+
+  // m7 — LG WM3900HBA (partly harvested, not yet profitable — drive motor still to sell)
+  await prisma.machinePart.createMany({
+    data: [
+      { machineId: m7.id, name: "Control Board", category: "Control Board", condition: "Good", quantity: 1, salePrice: 180, soldAt: new Date("2026-02-01") },
+      { machineId: m7.id, name: "Drain Pump Assembly", category: "Pump", condition: "Fair", quantity: 1, salePrice: 65, soldAt: new Date("2026-02-15") },
+      { machineId: m7.id, name: "Door Boot Gasket", category: "Door Seal", condition: "Good", quantity: 1, salePrice: 45, soldAt: new Date("2026-03-01") },
+      { machineId: m7.id, name: "Drum Bearing Kit", category: "Bearing", condition: "Fair", quantity: 1, salePrice: 35, soldAt: new Date("2026-03-20") },
+      { machineId: m7.id, name: "Drive Motor", category: "Motor", condition: "Good", quantity: 1, salePrice: null, soldAt: null, description: "Listed — asking $120" },
+    ],
+  });
+
+  // m8 — Kenmore 29002 (fully harvested, profitable — parts > $150 purchase cost)
+  await prisma.machinePart.createMany({
+    data: [
+      { machineId: m8.id, name: "Transmission Assembly", category: "Motor", condition: "Good", quantity: 1, salePrice: 85, soldAt: new Date("2026-01-10") },
+      { machineId: m8.id, name: "Water Inlet Valve", category: "Valve", condition: "Good", quantity: 1, salePrice: 45, soldAt: new Date("2026-01-15") },
+      { machineId: m8.id, name: "Lid Switch Assembly", category: "Control Board", condition: "Good", quantity: 1, salePrice: 38, soldAt: new Date("2026-02-01") },
+      { machineId: m8.id, name: "Agitator", category: "Drum", condition: "Fair", quantity: 1, salePrice: 30, soldAt: new Date("2026-02-20") },
+    ],
+  });
+  console.log("✓ Machine Parts");
 
   // --- Service Records ---
   const sr1 = await prisma.serviceRecord.create({

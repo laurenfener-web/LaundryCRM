@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatCurrency, formatDate, labelFromKey } from "@/lib/utils";
 import { getMachineFinancials } from "@/lib/db/financials";
 import type { MachineFinancials } from "@/types";
-import { Edit, ExternalLink, Mail, Phone, Plus, Wrench } from "lucide-react";
+import { Edit, ExternalLink, Mail, Package, Phone, Plus, Wrench } from "lucide-react";
 
 const statusColors: Record<string, string> = {
   ACTIVE: "bg-green-100 text-green-700",
@@ -97,12 +97,24 @@ export default async function MachineDetailPage({ params }: { params: Promise<{ 
                 {machine.condition.replace(/_/g, " ")}
               </span>
             )}
+            {machine.isPartsSource && (
+              <span className="text-xs px-2 py-1 font-bold uppercase tracking-wide" style={{ background: "#f5c518", color: "#0d1b2a" }}>
+                Parts Source
+              </span>
+            )}
           </div>
           <Link href={`/buildings/${machine.buildingId}`} className="text-sm text-blue-600 hover:underline mt-1 block">
             {machine.building.name}{machine.locationDetail ? ` · ${machine.locationDetail}` : ""}
           </Link>
         </div>
         <div className="flex gap-2">
+          {machine.isPartsSource && (
+            <Link href={`/machines/${id}/parts`}>
+              <Button size="sm" variant="outline" className="gap-1.5 border-yellow-400 text-yellow-700 bg-yellow-50">
+                <Package className="h-4 w-4" /> Parts Flow
+              </Button>
+            </Link>
+          )}
           <Link href={`/service/new?machineId=${machine.id}`}>
             <Button size="sm" variant="outline" className="gap-1.5">
               <Plus className="h-4 w-4" /> Log Service
