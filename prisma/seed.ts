@@ -353,9 +353,9 @@ async function main() {
       laborHours: 1.5,
       laborCost: 120,
       invoiceNumber: "INV-2025-0041",
-      parts: {
-        create: [],
-      },
+      invoiceStatus: "PAID",
+      invoicePaidAt: new Date("2025-11-12"),
+      parts: { create: [] },
     },
   });
   const sr2 = await prisma.serviceRecord.create({
@@ -369,10 +369,10 @@ async function main() {
       laborHours: 2,
       laborCost: 160,
       invoiceNumber: "INV-2026-0008",
+      invoiceStatus: "PAID",
+      invoicePaidAt: new Date("2026-01-24"),
       parts: {
-        create: [
-          { partId: part1.id, quantity: 1, unitCostAtTime: 28.5 },
-        ],
+        create: [{ partId: part1.id, quantity: 1, unitCostAtTime: 28.5 }],
       },
     },
   });
@@ -387,10 +387,10 @@ async function main() {
       laborHours: 2.5,
       laborCost: 200,
       invoiceNumber: "INV-2026-0019",
+      invoiceStatus: "PAID",
+      invoicePaidAt: new Date("2026-03-10"),
       parts: {
-        create: [
-          { partId: part2.id, quantity: 1, unitCostAtTime: 64.0 },
-        ],
+        create: [{ partId: part2.id, quantity: 1, unitCostAtTime: 64.0 }],
       },
     },
   });
@@ -405,6 +405,7 @@ async function main() {
       laborHours: 1,
       laborCost: 80,
       invoiceNumber: "INV-2026-0031",
+      invoiceStatus: "UNPAID",
     },
   });
   console.log("✓ Service Records");
