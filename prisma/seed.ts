@@ -410,12 +410,90 @@ async function main() {
   console.log("✓ Service Records");
 
   // --- Deals ---
+  await prisma.deal.deleteMany({ where: { assignedToId: user.id } });
+
+  // Closed/won deals — revenue demo data for laurenfener@gmail.com
+  await prisma.deal.create({
+    data: {
+      buildingId: b2.id,
+      assignedToId: user.id,
+      title: "204 Meserole — Full Machine Upgrade (4 units)",
+      stage: "CLOSED_WON",
+      value: 12000,
+      closeDate: new Date("2026-02-14"),
+      probability: 100,
+      notes: "Replaced 2 aging washers and 2 dryers. All units installed and tested. Paid in full.",
+      lineItems: {
+        create: [
+          { description: "Speed Queen SC25MD2 Washer", quantity: 2, unitPrice: 2400, machineType: "Washer" },
+          { description: "Speed Queen SDG25MD2 Dryer", quantity: 2, unitPrice: 2200, machineType: "Dryer" },
+          { description: "Installation & haul-away (4 units)", quantity: 1, unitPrice: 2800 },
+        ],
+      },
+    },
+  });
+  await prisma.deal.create({
+    data: {
+      buildingId: b1.id,
+      assignedToId: user.id,
+      title: "88 Franklin — Annual Service Contract 2025",
+      stage: "CLOSED_WON",
+      value: 2300,
+      closeDate: new Date("2025-09-01"),
+      probability: 100,
+      notes: "Full-year service contract signed. Includes 4 quarterly PM visits and priority emergency dispatch.",
+      lineItems: {
+        create: [
+          { description: "Quarterly PM visits", quantity: 4, unitPrice: 450 },
+          { description: "Priority emergency dispatch (annual)", quantity: 1, unitPrice: 500 },
+        ],
+      },
+    },
+  });
+  await prisma.deal.create({
+    data: {
+      buildingId: b3.id,
+      assignedToId: user.id,
+      title: "1200 Grand Concourse — Door Seal + PM",
+      stage: "CLOSED_WON",
+      value: 530,
+      closeDate: new Date("2025-12-10"),
+      probability: 100,
+      notes: "Front-load door seal replacement and semi-annual PM. Completed same day.",
+      lineItems: {
+        create: [
+          { description: "Front Load Door Seal (parts + labor)", quantity: 1, unitPrice: 180 },
+          { description: "Semi-annual PM visit", quantity: 1, unitPrice: 350 },
+        ],
+      },
+    },
+  });
+  await prisma.deal.create({
+    data: {
+      buildingId: b1.id,
+      assignedToId: user.id,
+      title: "88 Franklin — Emergency Dryer Repair",
+      stage: "CLOSED_WON",
+      value: 350,
+      closeDate: new Date("2026-01-22"),
+      probability: 100,
+      notes: "Belt replacement, paid on site.",
+      lineItems: {
+        create: [
+          { description: "Service call fee", quantity: 1, unitPrice: 80 },
+          { description: "Drive belt replacement (parts + labor)", quantity: 1, unitPrice: 270 },
+        ],
+      },
+    },
+  });
+
+  // Open pipeline deals
   await prisma.deal.create({
     data: {
       buildingId: b4.id,
       assignedToId: user.id,
       title: "510 W 110th — Machine Replacement (2x)",
-      stage: "PROPOSAL",
+      stage: "PROPOSAL_SENT",
       value: 5800,
       closeDate: new Date("2026-06-01"),
       probability: 60,
@@ -455,18 +533,6 @@ async function main() {
       value: 4200,
       probability: 20,
       notes: "Cold outreach — 24-unit building, machines ~8 years old. Follow up after site visit.",
-    },
-  });
-  await prisma.deal.create({
-    data: {
-      buildingId: b1.id,
-      assignedToId: user.id,
-      title: "88 Franklin — Emergency Dryer Repair",
-      stage: "CLOSED_WON",
-      value: 350,
-      closeDate: new Date("2026-01-22"),
-      probability: 100,
-      notes: "Completed — belt replacement, paid on site.",
     },
   });
   console.log("✓ Deals");
